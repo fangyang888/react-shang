@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { Tabs,Spin} from 'antd';
+import React, { useState,useEffect,useReducer } from 'react'
+import { Tabs,Spin,Table} from 'antd';
+import useSimpleTable from '../../hooks/useSimpleTable.js'
 const { TabPane } = Tabs;
 
 let tabKey = '1';
@@ -9,32 +10,48 @@ const tabPaneList = [
     { tab: '全部2', key: '3' },
     { tab: '全部3', key: '4' },
 ]
+
 const User = () => {
-    const [activeKey,setActiveKey] = useState('1');
-  
-    const a =()=>{
-        console.log(123)
-        return(
-            <div>123</div>
-        )
+    const columns = [
+        {
+          title: '姓名',
+          dataIndex: 'name',
+          key: 'name',
+        }
+      ];
+    const initialList = [{name:123}]  
+    const reducer = (state,action) => {
+        // console.log('===========')
+        // console.log(state)
+        if(action.type === 'tick'){
+            console.log('useReducer');
+            console.log([...state,...[{name:456}]]);
+            // setDataSource([...state,...[{name:456}]])
+            return [...state,...[{name:456}]];
+        }else{
+          throw new Error();
+        }
     }
-    const changeTabs = key=>tabKey = key;
-    const TabPanes = () => {
-        console.log(tabKey)
-        return tabPaneList.map(({ tab, key }) => {
-            return( 
-                tabKey === key ?
-                <TabPane tab={tab} key={key}> {a()} </TabPane> : <div>123</div>
-            )
-           
-        })
-    }
+    const [list, dispatch] = useReducer(reducer, initialList);
+    const {setDataSource,bind} =  useSimpleTable(list,columns);
+    // const [list,setList] = useState([{name:'123'}]);
+    
+    useEffect(() => {
+      const id = setTimeout(()=>{
+        dispatch({type:'tick'});
+        // console.log('==dis==')
+        // console.log(list)
+        // setDataSource(list);
+        // setDataSource(list) 
+       },2000);
+      
+       return () => 
+       
+       clearTimeout(id);
+    }, [dispatch])
+   
     return (
-        <Tabs activeKey={activeKey} onChange={e=>setActiveKey(e)} type="card">
-           {tabPaneList.map(pane => <TabPane tab={pane.tab} key={pane.key}>
-             { activeKey === pane.key ?  <Spin spinning={true} delay={500} key={pane.key} ></Spin> : <div key={pane.key}>123</div>}
-            </TabPane>)}
-        </Tabs>
+      <Table {...bind} />
     )
 }
 
