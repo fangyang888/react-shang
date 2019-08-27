@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useReducer } from 'react'
-import { Tabs,Spin,Table} from 'antd';
+import { Tabs,Spin,Table, Button} from 'antd';
 import useSimpleTable from '../../hooks/useSimpleTable.js'
 const { TabPane } = Tabs;
 
@@ -21,12 +21,8 @@ const User = () => {
       ];
     const initialList = [{name:123}]  
     const reducer = (state,action) => {
-        // console.log('===========')
-        // console.log(state)
-        if(action.type === 'tick'){
+       if(action.type === 'tick'){
             console.log('useReducer');
-            console.log([...state,...[{name:456}]]);
-            // setDataSource([...state,...[{name:456}]])
             return [...state,...[{name:456}]];
         }else{
           throw new Error();
@@ -39,19 +35,18 @@ const User = () => {
     useEffect(() => {
       const id = setTimeout(()=>{
         dispatch({type:'tick'});
-        // console.log('==dis==')
-        // console.log(list)
-        // setDataSource(list);
-        // setDataSource(list) 
+      
        },2000);
       
-       return () => 
-       
-       clearTimeout(id);
+       return () =>clearTimeout(id);
     }, [dispatch])
    
     return (
-      <Table {...bind} />
+      <div>
+         <Table {...bind} />
+         <Button onClick={()=>dispatch({type:'tick'})}>设置</Button>
+      </div>
+     
     )
 }
 

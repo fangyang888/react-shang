@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState, useCallback, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
 import './serve.css'
 const menus=[{name:'概况',path:'/'},{name:'历史订单',path:'/history'},{name:'详情',path:'/detail2'}]
@@ -22,9 +23,35 @@ function App() {
     </Router>
   );
 }
-
+function Child({ callback }) {
+  console.log('----------')
+  console.log(callback())
+  const [count, setCount] = useState(() => callback());
+  useEffect(() => {
+    console.log('-----233-----')
+      setCount(callback());
+  }, [callback]);
+  return <div>
+      {count}
+  </div>
+}
 function Home() {
-  return <h2>Home</h2>;
+  const [count, setCount] = useState(1);
+    const [val, setVal] = useState('');
+ 
+    const callback = useCallback(() => {
+        console.log('---aaaa---')
+        return count;
+    }, [count]);
+    return <div>
+        <h4>{count}</h4>
+        <Child callback={callback}/>
+        <div>
+            <button onClick={() => setCount(count + 1)}>+</button>
+            <input value={val} onChange={event => setVal(event.target.value)}/>
+        </div>
+    </div>;
+
 }
 
 

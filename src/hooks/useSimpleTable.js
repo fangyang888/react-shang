@@ -1,17 +1,17 @@
 import React,{useState,useEffect,useRef} from 'react'
-let s = [];
+
 const useSimpleTable = (list,columns) => {
-  s = list;
-  const [dataSource,setDataSource] = useState(s=>s);
+
+  // const [dataSource,setDataSource] = useState(s=>s);
   console.log('--------------')
   console.log(list)
-  useEffect(()=>{
-    setDataSource(l=>l)
-  },[])
+  // useEffect(()=>{
+  //   setDataSource(l=>l)
+  // },[])
   return{
-    setDataSource:l => {console.log('list',l); return setDataSource(l)},
+    setDataSource:l => list = l,
     bind:{
-      dataSource, 
+      dataSource:list, 
       columns,
       pagination:false
     }
