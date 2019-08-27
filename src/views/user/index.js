@@ -19,10 +19,16 @@ const User = () => {
           key: 'name',
         }
       ];
+    const [params,setParams] = useState({page:1,total:2})
+    const [count,setCount] = useState(0)
     const initialList = [{name:123}]  
     const reducer = (state,action) => {
+      console.log('======')
+       console.log(state);
+       console.log(action);
        if(action.type === 'tick'){
             console.log('useReducer');
+            setCount(2)
             return [...state,...[{name:456}]];
         }else{
           throw new Error();
@@ -40,11 +46,14 @@ const User = () => {
       
        return () =>clearTimeout(id);
     }, [dispatch])
-   
+    useEffect(()=>{
+      console.log(params.page)
+    },[params.page])
     return (
       <div>
          <Table {...bind} />
-         <Button onClick={()=>dispatch({type:'tick'})}>设置</Button>
+         <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
+         <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button>
       </div>
      
     )
