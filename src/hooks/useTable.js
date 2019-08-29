@@ -1,7 +1,8 @@
 import { useState, useEffect,useReducer,useCallback  } from 'react'
 import http from "helper/http";
-
+let initParams = {};
 const useTable = (columns, pageSize, host, url, params,isPagination=true) => {
+  initParams = JSON.parse(JSON.stringify(params))
   let initPagination = {
     pageSize,
     current: 1,
@@ -55,8 +56,14 @@ const useTable = (columns, pageSize, host, url, params,isPagination=true) => {
     setParams(Object.assign(getParams,p));
      callbackSource();
   }
+  const initDataSource = () => {
+    setPagination(Object.assign(pagination,{current:1}));
+    setParams(Object.assign(getParams,initParams));
+    callbackSource();
+  }
   return {
     initSearch: p => initSearch(p),
+    initDataSource:()=>initDataSource(),
     currentList:dataSource,
     setDataSource:list => dispatch({type:'success',list}),
     bind: {
