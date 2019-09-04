@@ -1,6 +1,7 @@
-import React, { useState,useEffect,useReducer } from 'react'
+import React, { useState,useEffect,useReducer,useRef } from 'react'
 import { Tabs,Spin,Table, Button} from 'antd';
 import useSimpleTable from '../../hooks/useSimpleTable.js'
+import Panel from './Panel';
 const { TabPane } = Tabs;
 
 let tabKey = '1';
@@ -19,6 +20,7 @@ const User = () => {
           key: 'name',
         }
       ];
+    const ref = useRef(null);
     const [params,setParams] = useState({page:1,total:2})
     const [count,setCount] = useState(0)
     const initialList = [{name:123}]  
@@ -48,12 +50,16 @@ const User = () => {
     }, [dispatch])
     useEffect(()=>{
       console.log(params.page)
-    },[params.page])
+    },[params.page]);
+    const getChild = () => {
+      ref.current.cleanValue();
+    }
     return (
       <div>
          <Table {...bind} />
          <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
-         <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button>
+         <Button onClick={()=>getChild()}>添加</Button>
+         <Panel ref={ref}></Panel>
       </div>
      
     )
