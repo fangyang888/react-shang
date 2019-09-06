@@ -1,6 +1,7 @@
-import React, { useState,useEffect,useReducer } from 'react'
+import React, { useState,useEffect,useReducer,useRef } from 'react'
 import { Tabs,Spin,Table, Button} from 'antd';
 import useSimpleTable from '../../hooks/useSimpleTable.js'
+import Panel from './Panel';
 const { TabPane } = Tabs;
 
 let tabKey = '1';
