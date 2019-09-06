@@ -12,16 +12,35 @@ const tabPaneList = [
 ]
 
 const User = () => {
+  const initialList = [{name:123,age:23,tel:13456754567},{}] 
     const columns = [
         {
           title: '姓名',
           dataIndex: 'name',
           key: 'name',
+        },
+        {
+          title: '年龄',
+          key:'age',
+          dataIndex: 'age',
+          render: (text, row, index) => {
+            if (index < initialList.length-1) {
+              return <a>{text}</a>;
+            }
+            return {
+              children: <span>总计</span>,
+              
+            };
+          },
+        },{
+          title: '手机',
+          dataIndex: 'tel',
+          key: 'tel',
         }
       ];
-    const [params,setParams] = useState({page:1,total:2})
-    const [count,setCount] = useState(0)
-    const initialList = [{name:123}]  
+    // const [params,setParams] = useState({page:1,total:2})
+    // const [count,setCount] = useState(0)
+  
     const reducer = (state,action) => {
       console.log('======')
        console.log(state);
@@ -29,7 +48,7 @@ const User = () => {
        if(action.type === 'tick'){
             console.log('useReducer');
             setCount(2)
-            return [...state,...[{name:456}]];
+            return [...state,...[{name:456,age:23}]];
         }else{
           throw new Error();
         }
@@ -38,22 +57,23 @@ const User = () => {
     const {setDataSource,bind} =  useSimpleTable(list,columns);
     // const [list,setList] = useState([{name:'123'}]);
     
-    useEffect(() => {
-      const id = setTimeout(()=>{
-        dispatch({type:'tick'});
+    // useEffect(() => {
+    //   const id = setTimeout(()=>{
+    //     dispatch({type:'tick'});
       
-       },2000);
+    //    },2000);
       
-       return () =>clearTimeout(id);
-    }, [dispatch])
-    useEffect(()=>{
-      console.log(params.page)
-    },[params.page])
+    //    return () =>clearTimeout(id);
+    // }, [dispatch])
+    // useEffect(()=>{
+    //   console.log(params.page)
+    // },[params.page])
     return (
       <div>
-         <Table {...bind} />
-         <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
-         <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button>
+         <Table  {...bind}
+         />
+         {/* <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
+         <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button> */}
       </div>
      
     )
