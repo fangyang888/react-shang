@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useReducer,useRef } from 'react'
 import { Tabs,Spin,Table, Button} from 'antd';
 import useSimpleTable from '../../hooks/useSimpleTable.js'
+import SelectTree from '../../components/SelectTree'
 import Panel from './Panel';
 const { TabPane } = Tabs;
 
@@ -40,7 +41,7 @@ const User = () => {
         }
       ];
     // const [params,setParams] = useState({page:1,total:2})
-    // const [count,setCount] = useState(0)
+    const [count,setCount] = useState(0)
   
     const reducer = (state,action) => {
       console.log('======')
@@ -75,6 +76,7 @@ const User = () => {
          />
          {/* <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
          <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button> */}
+         <SelectTree></SelectTree>
       </div>
      
     )
