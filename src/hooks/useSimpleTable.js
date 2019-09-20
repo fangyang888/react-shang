@@ -13,7 +13,8 @@ const useSimpleTable = (list,columns) => {
     bind:{
       dataSource:list, 
       columns,
-      pagination:false
+      pagination:false,
+      rowKey: (record, index) => index,
     }
   }
     

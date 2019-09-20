@@ -1,7 +1,7 @@
 import React,{useState,useEffect,useCallback} from 'react'
 import { TreeSelect  } from 'antd';
 import PropTypes from 'prop-types';
-import {getCity,getStore} from './constants';
+import {getCity,getStore,data,getChildren} from './constants';
 const { TreeNode,SHOW_PARENT} = TreeSelect ;
 const SingleSearch = props => {
   const { storeTypes, storeShowNotOnline, citySelectUnlimited,citySelect,isPermission} = props;
@@ -9,11 +9,11 @@ const SingleSearch = props => {
   //    props.onChange(value);
   // };
   const [treeData,setTreeData] = useState([])
-  const [value,setValue] = useState(undefined)
+  const [value,setValue] = useState(['44'])
   useEffect(()=>{
-    const data = getCity();
-    const list = data.map(item=>Object.assign(item,{key:item.zip,title:item.name}));
-    setTreeData(list);
+    // const data = getCity();
+    // const list = data.map(item=>Object.assign(item,{key:item.zip,title:item.name,value:item.zip}));
+    setTreeData(data);
   },[storeTypes])
   const onLoadData = treeNode => 
     new Promise(resolve => {
@@ -22,32 +22,49 @@ const SingleSearch = props => {
           return;
         }
         setTimeout(() => {
-          const store = getStore();
-          treeNode.props.dataRef.children = store.map(({name,code})=>Object.assign({},{title:name,value:code,key:code,isLeaf:true}));
+          const store = getChildren(treeNode.props.dataRef.key);
+          treeNode.props.dataRef.children = store
           console.log(treeData)
           setTreeData([...treeData]);
           resolve();
         }, 1000);
       });
   
-  const renderTreeNodes = data => 
+  const renderTreeNodes = data => {
+    console.log('treeData',treeData)
+    const list=  data.map((item,i) => {
+      // if (item.children) {
+      //   return (
+      //     <TreeNode title={item.title} key={item.key} dataRef={item}>
+      //       {renderTreeNodes(item.children)}
+      //     </TreeNode>
+      //   );
+      // }
+      // return <TreeNode key={item.key} {...item} dataRef={item} />;
+      return (
+        <TreeNode {...item} key={item.key} dataRef={item}>
+          {item.children && renderTreeNodes(item.children)}
+        </TreeNode>
+      );
+    });
+    console.log(list)
+    return list;
+  }
    
-    data.map(item => {
-        if (item.children) {
-          return (
-            <TreeNode title={item.title} key={item.key} dataRef={item}>
-              {renderTreeNodes(item.children)}
-            </TreeNode>
-          );
-        }
-        return <TreeNode key={item.key} {...item} dataRef={item} />;
-      });
+   
   
    const onChange = value => {
      console.log(value)
-    setValue(value)
+     setTimeout(()=>{
+      setValue(value)
+     })
+
   
   };
+  const onTreeExpand = expandedKeys =>{
+    console.log('========')
+    console.log(expandedKeys)
+  }
    return(
      <TreeSelect 
      style={{ width: 300 }}  
@@ -57,6 +74,8 @@ const SingleSearch = props => {
      showCheckedStrategy={SHOW_PARENT}
      loadData={treeNode=>onLoadData(treeNode)}
      onChange={value=> onChange(value)}
+     onTreeExpand={expandedKeys=>onTreeExpand(expandedKeys)}
+    //  treeData={treeData}
      >
          {renderTreeNodes(treeData)}
      </TreeSelect >
