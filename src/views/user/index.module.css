@@ -1,0 +1,55 @@
+.condition-btn {
+  line-height: 40px;
+}
+
+.operate-group>a+a {
+  margin-left: 10px;
+}
+
+.desc-div {
+  font-size: 12px;
+  color: #999999;
+  line-height: 1;
+}
+.flex{
+  display: flex;
+}
+.flex-width-full{
+  flex: 1;
+  /* border: 1px solid; */
+  position: relative;
+  min-height: 40px;
+}
+.word-center{
+  line-height: 40px;
+  text-align: center;
+  border-top: 1px solid #d3e5f3;
+  border-left: 1px solid #d3e5f3;
+}
+.word-center-white{
+  line-height: 40px;
+  text-align: center;
+  background-color: white;
+}
+.bg-blue{
+  background-color: #1890FF;
+  /* height: 100%; */
+}
+.bg-fixed{
+  position: absolute;
+  top: 40px;
+  bottom: 0px;
+  background-color: #1890FF;
+  width: 100%;
+ 
+}
+.bg-fixed-center{
+  position: absolute;
+  /* top: 40px; */
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
+}
