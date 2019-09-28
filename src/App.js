@@ -83,7 +83,7 @@ class App extends React.Component {
         >
          {this.getMenuList(menuList)}
         </Menu>
-        <div className="content">
+        <div className="content" style={{width:'100%'}}>
           hello react
           {/* {routerRender(menuList)} */}
           <Switch>

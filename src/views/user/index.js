@@ -3,6 +3,7 @@ import { Tabs,Spin,Table, Button} from 'antd';
 import useSimpleTable from '../../hooks/useSimpleTable.js'
 import SelectTree from '../../components/SelectTree'
 import Panel from './Panel';
+import WordFile from './WordFile'
 const { TabPane } = Tabs;
 
 let tabKey = '1';
@@ -42,7 +43,8 @@ const User = () => {
       ];
     // const [params,setParams] = useState({page:1,total:2})
     const [count,setCount] = useState(0)
-  
+
+
     const reducer = (state,action) => {
       console.log('======')
        console.log(state);
@@ -76,7 +78,8 @@ const User = () => {
          />
          {/* <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
          <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button> */}
-         <SelectTree></SelectTree>
+         {/* <SelectTree></SelectTree> */}
+         <WordFile></WordFile>
       </div>
      
     )
