@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useMemo,useCallback} from 'react'
 
 import styles from './index.module.css'
 
@@ -33,6 +33,7 @@ const WordFile = props => {
     }
     getWordDetail();
   }, [])
+ 
   const onChangeSingle = v => {
     // v为所选中值  --数组
   }
@@ -43,6 +44,10 @@ const WordFile = props => {
     // { type, city, store} = data;  -- type 门店类型  city 城市数组 store门店数组
 
   }
+  const callback = useCallback(count => {
+    console.log(count);
+    return count;
+  }, [value]);
   const getParentAndChildWord = (parentWordList,count) => {
     // if (parentWordList && parentWordList.length > 0) {
       console.log('----23-------')
@@ -124,7 +129,7 @@ const WordFile = props => {
             </div>
             <div className={styles['flex-width-full']} style={{ backgroundColor: '#b9e3fc' }}>
               {i === 0 && <div className={styles['word-center-white']}>同义词</div>}
-              <div className={styles['bg-fixed-center']} style={{ top: i > 0 ? '0px' : '40px' }}>{list.text}</div>
+              <div className={styles['bg-fixed-center']} style={{ top: i > 0 ? '0px' : '40px' }}>{list.text}--{callback(list.count)}</div>
             </div>
             <div className={styles['flex-width-full']} style={{ backgroundColor: '#f1f8fe' }}>
               {i === 0 && <div className={styles['word-center-white']}>字词</div>}
@@ -135,7 +140,7 @@ const WordFile = props => {
             <div className={styles['flex-width-full']} style={{ backgroundColor: '#dbf1ff' }}>
               {i === 0 && <div className={styles['word-center-white']}>字词同义词</div>}
               <div>
-                {getParentAndChildSynonymWord(list.child_word_list,list.count)}
+               {getParentAndChildSynonymWord(list.child_word_list,list.count)}
               </div>
             </div>
           </div>

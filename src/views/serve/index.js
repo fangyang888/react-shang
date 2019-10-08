@@ -2,17 +2,23 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
 import './serve.css'
+import StoreSelectorGroup from '../user/StoreSelectorGroup';
+const {SelectStore} = StoreSelectorGroup;
 const menus=[{name:'概况',path:'/'},{name:'历史订单',path:'/history'},{name:'详情',path:'/detail2'}]
 function App() {
+  const onChange = v => {
+    console.log(v)
+  }
   return (
     <Router>
       
-      <div className="panel">
+      <div className="panel" style={{backgroundColor:'white'}}>
         <div className="menu">
          {menus.map(item => <div className="menu-item" key={item.path} >
          <Link to={item.path}>{item.name}</Link>
             </div>)}
         </div>
+        <SelectStore onChange={e=>onChange(e)}></SelectStore> 
         <div className="content">
         <Route exact path="/" component={Home} />
         <Route exact path="/history" component={Home} />

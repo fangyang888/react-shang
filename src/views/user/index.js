@@ -1,9 +1,11 @@
 import React, { useState,useEffect,useReducer,useRef } from 'react'
-import { Tabs,Spin,Table, Button} from 'antd';
+import { Tabs,Spin,Table, Button,Input} from 'antd';
 import useSimpleTable from '../../hooks/useSimpleTable.js'
 import SelectTree from '../../components/SelectTree'
 import Panel from './Panel';
-import WordFile from './WordFile'
+import WordFile from './WordFile';
+import StoreSelectorGroup from './StoreSelectorGroup';
+const {SelectStore} = StoreSelectorGroup;
 const { TabPane } = Tabs;
 
 let tabKey = '1';
@@ -43,7 +45,7 @@ const User = () => {
       ];
     // const [params,setParams] = useState({page:1,total:2})
     const [count,setCount] = useState(0)
-
+    const [value,setValue] = useState('')
 
     const reducer = (state,action) => {
       console.log('======')
@@ -72,14 +74,19 @@ const User = () => {
     // useEffect(()=>{
     //   console.log(params.page)
     // },[params.page])
+    const onChange = v => {
+      console.log(v)
+    }
     return (
       <div>
+         <Input value={value} onChange={e=>setValue(e.target.value)}></Input>
          <Table  {...bind}
          />
          {/* <Button onClick={()=>dispatch({type:'tick',list:[{name:'rte'}]})}>设置{params.page}</Button>
          <Button onClick={()=>setParams({...params,page:params.page+1})}>添加</Button> */}
          {/* <SelectTree></SelectTree> */}
          <WordFile></WordFile>
+         {/* <SelectStore onChange={e=>onChange(e)}></SelectStore> */}
       </div>
      
     )

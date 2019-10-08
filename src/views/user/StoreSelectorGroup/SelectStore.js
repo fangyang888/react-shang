@@ -6,6 +6,7 @@ import styles from './index.module.css'
 const CheckboxGroup = Checkbox.Group;
 
 const SelectStore = props => {
+
     const { storeType, storeShowNotOnline, isPermission, style } = props;
     const [type, setType] = useState(-1);
     const [cityOptions, setCityOptions] = useState([]);
@@ -16,13 +17,15 @@ const SelectStore = props => {
     const [selectParams, setSelectParams] = useState({ checkedList: [], indeterminate: false, checkAll: false })
     const [citySelected, setCitySelected] = useState('');
     const [indeterminateMap, setIndeterminateMap] = useState({});
-    const callbackCity = useCallback(async () => {
+    const callbackCity = useCallback( () => {
         const params = {
             store_type: storeType,
             is_open: storeShowNotOnline ? true : false,
             // permission_check:isPermission ? true : false
         }
-        const list = await getStore(params);
+        const list = getStore(params);
+    
+        console.log(list)
         setCityOptions(list);
         setStoreOptions(list);
 
@@ -45,14 +48,16 @@ const SelectStore = props => {
            const keys = Object.keys(storeMap);
            console.log('==key==');
            console.log(keys)
-           if(keys.includes(value)){
-            console.log('=======')
+           console.log(value)
+           if(keys.includes(value+'')){
+            console.log('===34====')
             checkedList = storeMap[value];
            }
         }
         console.log(checkedList)
         // const checkedList = selectedStore;
-        setSelectParams(c=>Object.assign(c, {indeterminate: !!checkedList.length && checkedList.length < stores.length, checkAll: checkedList.length === stores.length }) )
+        //这边改变
+        setSelectParams(c=>Object.assign(c, {checkedList,indeterminate: !!checkedList.length && checkedList.length < stores.length, checkAll: checkedList.length === stores.length }) )
        
     }
     const onCheckAllChange = e => {
