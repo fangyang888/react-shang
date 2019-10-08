@@ -1,4 +1,4 @@
-{
+const data = {
     "errcode":0,
     "errmsg":"",
     "data":{
