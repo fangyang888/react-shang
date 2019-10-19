@@ -2,14 +2,21 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
 import './serve.css'
-import StoreSelectorGroup from '../user/StoreSelectorGroup';
-const {SelectStore} = StoreSelectorGroup;
+
 const menus=[{name:'概况',path:'/'},{name:'历史订单',path:'/history'},{name:'详情',path:'/detail2'}]
 function App() {
+  const [params,setParams] = useState({count:0})
   const onChange = v => {
     console.log(v)
   }
-  return (
+  const  setWatch = (key,method) => {
+
+  }
+  useEffect(()=>{
+    
+  },[])
+  
+  return (   
     <Router>
       
       <div className="panel" style={{backgroundColor:'white'}}>
@@ -18,7 +25,8 @@ function App() {
          <Link to={item.path}>{item.name}</Link>
             </div>)}
         </div>
-        <SelectStore onChange={e=>onChange(e)}></SelectStore> 
+        {params.count}
+       
         <div className="content">
         <Route exact path="/" component={Home} />
         <Route exact path="/history" component={Home} />
